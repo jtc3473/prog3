@@ -42,13 +42,35 @@ public class Interpreter implements CritterInterpreter {
 				case "left":
 					c.left();
 					break label;
+				case "infect":
+					if (arrOfStr.length == 2) {
+						int n = Integer.parseInt(arrOfStr[1]);
+						c.infect(n);
+					} else
+						c.infect();
+					break label;
 				case "go":
-					int n = Integer.parseInt(arrOfStr[1]);
+					String number = arrOfStr[1];
+					int n = 0;
+					if (number.charAt(0) == '+') {
+						int add = Integer.parseInt(number.substring(1));
+						if (behavior.size() - (getNextCodeLine() - 1) < add) {
+							n = add - behavior.size() - (getNextCodeLine() - 1);
+						}
+					}
+					if (number.charAt(0) == '-') {
+						int sub = Integer.parseInt(number.substring(1));
+						if (getNextCodeLine() - sub < 1) {
+							n = behavior.size() - (getNextCodeLine() - sub);
+						}
+					} else
+						n = Integer.parseInt(arrOfStr[1]);
+
 					readLine = behavior.get(n - 1);
 					String[] nArrOfStr = readLine.split(" ");
 					command = nArrOfStr[0];
-					c.setNextCodeLine(n);
-					break;
+					c.setNextCodeLine(n + 1);
+
 			}
 			//		if (arrOfStr[0].equals("ifeq")) {
 			//			c.ifeq(Integer.parseInt(arrOfStr[1]), Integer.parseInt(arrOfStr[2]), Integer.parseInt(arrOfStr[3]));
