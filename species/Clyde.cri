@@ -1,6 +1,9 @@
 rabbit
+left
 hop
-eat
-go 1
+ifempty 0 1
+right
+infect 2
+go 2
 
 asdf
