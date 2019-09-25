@@ -220,7 +220,7 @@ public class Interpreter implements CritterInterpreter {
 					break;
                 case "inc":
                     int inc1 = Integer.parseInt(arrOfStr[1]);
-                    int incReg = c.getReg(inc1)++;
+                    int incReg = (c.getReg(inc1)) + 1;
                     c.setReg(inc1, incReg);
 					int inext = c.getNextCodeLine();
 					readLine = behavior.get(inext - 1);
@@ -230,7 +230,7 @@ public class Interpreter implements CritterInterpreter {
 					break;
                 case "dec":
                     int dec1 = Integer.parseInt(arrOfStr[1]);
-                    int decReg = c.getReg(dec1)--;
+                    int decReg = (c.getReg(dec1)) - 1;
 					c.setReg(dec1, decReg);
 					int dnext = c.getNextCodeLine();
 					readLine = behavior.get(dnext - 1);
@@ -291,18 +291,29 @@ public class Interpreter implements CritterInterpreter {
 					break;
 				case "go":
 					String number = arrOfStr[1];
-					int n = Integer.parseInt(arrOfStr[1]);
+					int n = Integer.parseInt(number);
+                    System.out.println(c.getNextCodeLine());
 					if (number.charAt(0) == '+') {
-						int add = Integer.parseInt(number.substring(1));
-						if (behavior.size() - (c.getNextCodeLine() - 1) < add) {
-							n = add - behavior.size() - (c.getNextCodeLine() - 1);
-						}
+					    n = Integer.parseInt(number.substring(1));
+					    if (n > behavior.size()) {
+					        n = n % behavior.size();
+                        }
+						if (behavior.size() - (c.getNextCodeLine() - 1) < n) {
+							n = (n - (behavior.size() - (c.getNextCodeLine() - 1)));
+						} else {
+						    n = n + (c.getNextCodeLine()-1);
+                        }
 					}
 					if (number.substring(0, 1).equals("-")) {
-						int sub = Integer.parseInt(number.substring(1));
-						if (c.getNextCodeLine() - sub < 1) {
-							n = behavior.size() - (c.getNextCodeLine() - sub);
-						}
+					    n = Integer.parseInt(number.substring(1));
+                        if (n > behavior.size()) {
+                            n = n % behavior.size();
+                        }
+						if (n > (c.getNextCodeLine() - 1)) {
+							n = behavior.size() - (n - (c.getNextCodeLine() - 1));
+						} else {
+						    n = (c.getNextCodeLine() - 1) - n;
+                        }
 					}
 
 					readLine = behavior.get(n - 1);

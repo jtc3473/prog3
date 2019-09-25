@@ -1,10 +1,17 @@
-rabbit
-write 1 3
+clyde
+ifenemy
+ifhungry
+ifstarving
+ifempty
+ifally
+iflt
+ifgt
+ifeq
 left
 hop
-ifempty 0 1
+go -10
+hop
 right
-infect 2
-go 2
+go 1
 
 asdf
