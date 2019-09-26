@@ -1,0 +1,27 @@
+Clyoon
+ifenemy 0 eatIfHungryORClose otherwise infect
+ifenemy 45
+right
+go 1
+ifenemy 315
+left
+go 1
+ifenemy 90 ifempty0thenhop
+left
+go 1
+ifenemy 135 ifempty0thenhop
+left
+go 1
+ifenemy 180 ifempty0thenhop ifnotemptyturn(ifrandomturnleftorright)
+ifenemy 225 ifempty0thenhop
+right
+go 1
+ifenemy 270 ifempty0thenhop
+right
+go 1
+ifwall 0 checkifwall45
+ifwall 45 checkifwall315
+right
+ifwall 315 checkifwall270
+left
+go 1

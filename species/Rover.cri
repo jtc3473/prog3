@@ -17,3 +17,4 @@ go 1
 
 This critter hops in a straight line until it is blocked, infecting any
 enemies that it sees.  When it can't move forward it turns.
+ifenemy, ifally, ifempty, probably ifwall, iflt and probably ifgt, ifeq, sub

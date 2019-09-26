@@ -24,13 +24,23 @@ public class Interpreter implements CritterInterpreter {
 		ArrayList<String> behavior = (ArrayList)c.getCode();
 		int line = c.getNextCodeLine();
 		String readLine = behavior.get(line - 1);
-		String[] arrOfStr = readLine.split(" ");
+		String[] arrOfStr = new String[4];
+		arrOfStr = readLine.split(" ");
 		String command = arrOfStr[0];
-
 		c.setNextCodeLine(line + 1);
-//		boolean action = false;
+		boolean once = true;
+
 		label:
 		while (true) {
+
+		    if (!once) {
+                line = c.getNextCodeLine() - 1;
+                readLine = behavior.get(line - 1);
+                arrOfStr = readLine.split(" ");
+                System.out.println(readLine);
+                command = arrOfStr[0];
+            }
+		    once = false;
 
 			switch (command) {
 				case "hop":
@@ -57,15 +67,9 @@ public class Interpreter implements CritterInterpreter {
                 case "ifrandom":
                     int r = Integer.parseInt(arrOfStr[1]);
                     if(c.ifRandom()){
-						readLine = behavior.get(r - 1);
-                        String[] nArrOfStr = readLine.split(" ");
-                        command = nArrOfStr[0];
                         c.setNextCodeLine(r + 1);
                     } else {
                         int next = c.getNextCodeLine();
-                        readLine = behavior.get(next - 1);
-                        String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
                         c.setNextCodeLine(next + 1);
                     }
                     break;
@@ -73,30 +77,18 @@ public class Interpreter implements CritterInterpreter {
 					int h = Integer.parseInt(arrOfStr[1]);
 
 					if (c.getHungerLevel() == Critter.HungerLevel.HUNGRY || c.getHungerLevel() == Critter.HungerLevel.STARVING) {
-						readLine = behavior.get(h - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(h + 1);
 					} else {
 						int next = c.getNextCodeLine();
-						readLine = behavior.get(next - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(next + 1);
 					}
 					break;
                 case "ifstarving":
                     int s = Integer.parseInt(arrOfStr[1]);
                     if (c.getHungerLevel() == Critter.HungerLevel.STARVING) {
-						readLine = behavior.get(s - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(s + 1);
 					} else {
 						int next = c.getNextCodeLine();
-						readLine = behavior.get(next - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(next + 1);
 					}
                     break;
@@ -104,16 +96,11 @@ public class Interpreter implements CritterInterpreter {
                     int eB = Integer.parseInt(arrOfStr[1]);
                     int e = Integer.parseInt(arrOfStr[2]);
                     int bearing = c.getCellContent(eB);
+                    System.out.println(bearing + Critter.EMPTY);
                     if (bearing == Critter.EMPTY) {
-						readLine = behavior.get(e - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(e + 1);
 					} else {
 						int next = c.getNextCodeLine();
-						readLine = behavior.get(next - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(next + 1);
 					}
                     break;
@@ -122,15 +109,9 @@ public class Interpreter implements CritterInterpreter {
                     int a = Integer.parseInt(arrOfStr[2]);
                     int bearinga = c.getCellContent(aB);
                     if (bearinga == Critter.ALLY) {
-						readLine = behavior.get(a - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(a + 1);
 					} else {
 						int next = c.getNextCodeLine();
-						readLine = behavior.get(next - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(next + 1);
 					}
                     break;
@@ -139,15 +120,9 @@ public class Interpreter implements CritterInterpreter {
                     int en = Integer.parseInt(arrOfStr[2]);
 					int bearingen = c.getCellContent(enB);
 					if (bearingen == Critter.ENEMY) {
-						readLine = behavior.get(en - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(en + 1);
 					} else {
 						int next = c.getNextCodeLine();
-						readLine = behavior.get(next - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(next + 1);
 					}
 					break;
@@ -156,15 +131,9 @@ public class Interpreter implements CritterInterpreter {
                     int w = Integer.parseInt(arrOfStr[2]);
 					int bearingw = c.getCellContent(wB);
 					if (bearingw == Critter.WALL) {
-						readLine = behavior.get(w - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(w + 1);
 					} else {
 						int next = c.getNextCodeLine();
-						readLine = behavior.get(next - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(next + 1);
 					}
 					break;
@@ -174,118 +143,79 @@ public class Interpreter implements CritterInterpreter {
                     int ann = Integer.parseInt((arrOfStr[3]));
                     int offAngle = c.getOffAngle(anB);
                     if (offAngle == an) {
-						readLine = behavior.get(ann - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(ann + 1);
 					} else {
 						int next = c.getNextCodeLine();
-						readLine = behavior.get(next - 1);
-						String[] nArrOfStr = readLine.split(" ");
-						command = nArrOfStr[0];
 						c.setNextCodeLine(next + 1);
 					}
 					break;
                 case "write":
-                    int wr = Integer.parseInt(arrOfStr[1]);
+                    int wr = Integer.parseInt(arrOfStr[1].substring(1));
                     int v = Integer.parseInt(arrOfStr[2]);
                     c.setReg(wr, v);
 					int next = c.getNextCodeLine();
-					readLine = behavior.get(next - 1);
-					String[] wArrOfStr = readLine.split(" ");
-					command = wArrOfStr[0];
 					c.setNextCodeLine(next + 1);
                     break;
                 case "add":
-                    int r1 = Integer.parseInt(arrOfStr[1]);
-                    int r2 = Integer.parseInt(arrOfStr[2]);
+                    int r1 = Integer.parseInt(arrOfStr[1].substring(1));
+                    int r2 = Integer.parseInt(arrOfStr[2].substring(1));
                     int newReg = c.getReg(r1) + c.getReg(r2);
                     c.setReg(r1, newReg);
 					int rnext = c.getNextCodeLine();
-					readLine = behavior.get(rnext - 1);
-					String[] rArrOfStr = readLine.split(" ");
-					command = rArrOfStr[0];
 					c.setNextCodeLine(rnext + 1);
 					break;
                 case "sub":
-                    int sub1 = Integer.parseInt(arrOfStr[1]);
-                    int sub2 = Integer.parseInt(arrOfStr[2]);
+                    int sub1 = Integer.parseInt(arrOfStr[1].substring(1));
+                    int sub2 = Integer.parseInt(arrOfStr[2].substring(1));
 					int newReg2 = c.getReg(sub1) - c.getReg(sub2);
 					c.setReg(sub1, newReg2);
 					int snext = c.getNextCodeLine();
-					readLine = behavior.get(snext - 1);
-					String[] sArrOfStr = readLine.split(" ");
-					command = sArrOfStr[0];
 					c.setNextCodeLine(snext + 1);
 					break;
                 case "inc":
-                    int inc1 = Integer.parseInt(arrOfStr[1]);
+                    int inc1 = Integer.parseInt(arrOfStr[1].substring(1));
                     int incReg = (c.getReg(inc1)) + 1;
                     c.setReg(inc1, incReg);
 					int inext = c.getNextCodeLine();
-					readLine = behavior.get(inext - 1);
-					String[] iArrOfStr = readLine.split(" ");
-					command = iArrOfStr[0];
 					c.setNextCodeLine(inext + 1);
 					break;
                 case "dec":
-                    int dec1 = Integer.parseInt(arrOfStr[1]);
+                    int dec1 = Integer.parseInt(arrOfStr[1].substring(1));
                     int decReg = (c.getReg(dec1)) - 1;
 					c.setReg(dec1, decReg);
 					int dnext = c.getNextCodeLine();
-					readLine = behavior.get(dnext - 1);
-					String[] dArrOfStr = readLine.split(" ");
-					command = dArrOfStr[0];
 					c.setNextCodeLine(dnext + 1);
 					break;
                 case "iflt":
-                    int iflt1 = Integer.parseInt(arrOfStr[1]);
-                    int iflt2 = Integer.parseInt(arrOfStr[2]);
+                    int iflt1 = Integer.parseInt(arrOfStr[1].substring(1));
+                    int iflt2 = Integer.parseInt(arrOfStr[2].substring(1));
                     int iflt3 = Integer.parseInt(arrOfStr[3]);
                     if (c.getReg(iflt1) < c.getReg(iflt2)) {
-						readLine = behavior.get(iflt3 - 1);
-						String[] ltArrOfStr = readLine.split(" ");
-						command = ltArrOfStr[0];
 						c.setNextCodeLine(iflt3 + 1);
 					} else {
 						int ltnext = c.getNextCodeLine();
-						readLine = behavior.get(ltnext - 1);
-						String[] ltArrOfStr = readLine.split(" ");
-						command = ltArrOfStr[0];
 						c.setNextCodeLine(ltnext + 1);
 					}
 					break;
                 case "ifeq":
-                    int ifeq1 = Integer.parseInt(arrOfStr[1]);
-                    int ifeq2 = Integer.parseInt(arrOfStr[2]);
+                    int ifeq1 = Integer.parseInt(arrOfStr[1].substring(1));
+                    int ifeq2 = Integer.parseInt(arrOfStr[2].substring(1));
                     int ifeq3 = Integer.parseInt(arrOfStr[3]);
 					if (c.getReg(ifeq1) == c.getReg(ifeq2)) {
-						readLine = behavior.get(ifeq3 - 1);
-						String[] eqArrOfStr = readLine.split(" ");
-						command = eqArrOfStr[0];
 						c.setNextCodeLine(ifeq3 + 1);
 					} else {
 						int eqnext = c.getNextCodeLine();
-						readLine = behavior.get(eqnext - 1);
-						String[] eqArrOfStr = readLine.split(" ");
-						command = eqArrOfStr[0];
 						c.setNextCodeLine(eqnext + 1);
 					}
 					break;
                 case "ifgt":
-                    int ifgt1 = Integer.parseInt(arrOfStr[1]);
-                    int ifgt2 = Integer.parseInt(arrOfStr[2]);
+                    int ifgt1 = Integer.parseInt(arrOfStr[1].substring(1));
+                    int ifgt2 = Integer.parseInt(arrOfStr[2].substring(1));
                     int ifgt3 = Integer.parseInt(arrOfStr[3]);
 					if (c.getReg(ifgt1) < c.getReg(ifgt2)) {
-						readLine = behavior.get(ifgt3 - 1);
-						String[] gtArrOfStr = readLine.split(" ");
-						command = gtArrOfStr[0];
 						c.setNextCodeLine(ifgt3 + 1);
 					} else {
 						int gtnext = c.getNextCodeLine();
-						readLine = behavior.get(gtnext - 1);
-						String[] gtArrOfStr = readLine.split(" ");
-						command = gtArrOfStr[0];
 						c.setNextCodeLine(gtnext + 1);
 					}
 					break;
@@ -315,16 +245,10 @@ public class Interpreter implements CritterInterpreter {
 						    n = (c.getNextCodeLine() - 1) - n;
                         }
 					}
-
-					readLine = behavior.get(n - 1);
-					String[] nArrOfStr = readLine.split(" ");
-					command = nArrOfStr[0];
 					c.setNextCodeLine(n + 1);
 
 			}
-			//		if (arrOfStr[0].equals("ifeq")) {
-			//			c.ifeq(Integer.parseInt(arrOfStr[1]), Integer.parseInt(arrOfStr[2]), Integer.parseInt(arrOfStr[3]));
-			//		}
+
 		}
 
 		return;

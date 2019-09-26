@@ -1,0 +1,7 @@
+Test
+ifempty 0 3
+right
+hop
+go 1
+
+This is a test file
