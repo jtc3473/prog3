@@ -28,19 +28,13 @@ public class CritterTest implements Critter {
         return code;
     }
 
-    public static void
-
     public static void eat() {
         System.out.println("I just ate");
     }
 
-    public static void getHungerLevel() {
-        System.out.println("I am " + Critter.HungerLevel);
-    }
+    public static void getHungerLevel() { System.out.println("I am a certain level of hungry"); }
 
-    public static void getCellContent(int bearing) {
-        System.out.println("The content in the cell at bearing" + bearing + "is");
-    }
+    public static void getCellContent(int bearing) { System.out.println("The content in the cell at bearing" + bearing + "is..."); }
 
     public static void getReg(int n) {
         System.out.println("one of the register numbers for this critter is" + n);
@@ -59,8 +53,10 @@ public class CritterTest implements Critter {
     }
 
     public static void infect() {
-        System.out.println("I just infected");
+        System.out.println("I just infected and new ally will start at beginning code");
     }
+
+    public static void infect(int n) { System.out.println("I just infected and new ally will start at line " + n); }
 
     public static void setNextCodeLine(int n) {
         System.out.println("setting next code line to" + n);

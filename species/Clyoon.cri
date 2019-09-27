@@ -1,27 +1,52 @@
 Clyoon
-ifenemy 0 eatIfHungryORClose otherwise infect
-ifenemy 45
-right
-go 1
-ifenemy 315
-left
-go 1
-ifenemy 90 ifempty0thenhop
-left
-go 1
-ifenemy 135 ifempty0thenhop
-left
-go 1
+write r1 80
+write r2 250
+write r3 0
+write r4 0
+inc r3 (call this line before when call go)
+ifenemy 0 ifhungryORClose otherwise infect(inc 4)
+ifenemy 45 turn right
+ifenemy 315 turn left
+ifenemy 90 ifempty0thenhop elseleft
+ifenemy 270 ifempty0thenhop elseright
+ifenemy 135 ifempty0thenhop elseleft
+ifenemy 225 ifempty0thenhop elseright
 ifenemy 180 ifempty0thenhop ifnotemptyturn(ifrandomturnleftorright)
-ifenemy 225 ifempty0thenhop
-right
-go 1
-ifenemy 270 ifempty0thenhop
-right
-go 1
+
+
 ifwall 0 checkifwall45
+hop
+go 5
 ifwall 45 checkifwall315
 right
+go 5
 ifwall 315 checkifwall270
 left
-go 1
+go 5
+ifwall 270 turnright
+left
+go 5
+
+left
+go 5
+right
+go 5
+
+ifgt r3 r1 (set r3 to 0 eat)
+infect
+go 5
+ifempty (hop) LEFT          // actions taken if enemy behind
+left
+go 5
+ifempty (hop) RIGHT
+right
+go 5
+ifempty (hop) RANDOM
+ifrandom true-right
+left
+go 5                        // END
+
+
+
+hop
+go 5

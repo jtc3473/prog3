@@ -279,6 +279,7 @@ public class Interpreter implements CritterInterpreter {
 				break;
 			code.add(line);
 		}
+        System.out.println(code.toString());
 
 		// create Critter
 		CritterSpecies species = new CritterSpecies(name, code);
